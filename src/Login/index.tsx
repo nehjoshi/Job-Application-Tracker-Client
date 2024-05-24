@@ -12,10 +12,20 @@ export const Login: React.FC = () => {
     const [loading, setLoading] = useState(false);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [failureMessage, setFailureMessage] = useState("");
+    const [remember, setRemember] = useState(true);
 
     const submitCredentials = async () => {
         setLoading(true);
-        await GET(email, password);
+        setFailureMessage("");
+        const res = await GET(email, password, remember);
+        console.log(res.status, res.message);
+        if (res.status === 200) {
+            console.log(res);
+        }
+        else {
+            setFailureMessage(res.message);
+        }
         setLoading(false);
     }
 
@@ -29,7 +39,7 @@ export const Login: React.FC = () => {
                     <TextField onChange = {e => setPassword(e.target.value)} className="form-input" type="password" label="Password" variant="outlined"></TextField>
                     <div className="remember-me-row">
                         <div className="checkbox-container">
-                            <CheckBox className="checkbox" defaultChecked></CheckBox><span>Remember me</span>
+                            <CheckBox onClick={() => setRemember(!remember)} className="checkbox" checked={remember}></CheckBox><span>Remember me</span>
                         </div>
                         <span className='forgot-password'>Forgot Password?</span>
                     </div>
@@ -40,6 +50,7 @@ export const Login: React.FC = () => {
                     </div>
                     <div className="loader-container">
                         {loading && <Loader />}
+                        {failureMessage}
                     </div>
                 </div>
             </section>
