@@ -1,10 +1,11 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import { Layout } from '../components/Layout';
 import "./Login.scss";
 import TextField from '@mui/material/TextField';
 import CheckBox from '@mui/material/Checkbox';
 import { Loader } from '../components/Loader/Loader';
-import { GET } from './getAuth';
+import { GET, POST } from './getAuth';
+import { useNavigate } from 'react-router-dom';
 
 export const Login: React.FC = () => {
 
@@ -14,14 +15,27 @@ export const Login: React.FC = () => {
     const [password, setPassword] = useState("");
     const [failureMessage, setFailureMessage] = useState("");
     const [remember, setRemember] = useState(true);
+    const navigate = useNavigate();
+
+    const tryInitialAuth = async () => {
+        const res = await GET();
+        if (res.status === 200) {
+            navigate("/applications")
+        }
+
+    }
+
+    useEffect(() => {
+        tryInitialAuth();
+    }, []);
 
     const submitCredentials = async () => {
         setLoading(true);
         setFailureMessage("");
-        const res = await GET(email, password, remember);
+        const res = await POST(email, password, remember);
         console.log(res.status, res.message);
         if (res.status === 200) {
-            console.log(res);
+            navigate("/applications");
         }
         else {
             setFailureMessage(res.message);
@@ -31,12 +45,12 @@ export const Login: React.FC = () => {
 
 
     return (
-        <Layout showNavItems={false}>
+        <Layout showNav showNavItems={false}>
             <section className='container'>
                 <div className="form-container">
                     <h1 className='form-heading'>Welcome Back</h1>
-                    <TextField onChange = {e => setEmail(e.target.value)} className="form-input" label="Email" variant="outlined"></TextField>
-                    <TextField onChange = {e => setPassword(e.target.value)} className="form-input" type="password" label="Password" variant="outlined"></TextField>
+                    <TextField onChange={e => setEmail(e.target.value)} className="form-input" label="Email" variant="outlined"></TextField>
+                    <TextField onChange={e => setPassword(e.target.value)} className="form-input" type="password" label="Password" variant="outlined"></TextField>
                     <div className="remember-me-row">
                         <div className="checkbox-container">
                             <CheckBox onClick={() => setRemember(!remember)} className="checkbox" checked={remember}></CheckBox><span>Remember me</span>

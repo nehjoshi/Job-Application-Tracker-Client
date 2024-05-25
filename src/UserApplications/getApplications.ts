@@ -2,18 +2,26 @@ import axios from "axios";
 import { ENDPOINTS } from "../utils/endpoints";
 import { generateHeader } from "../utils/generateRequestHeader";
 import { getAccessToken } from "../utils/getAccessToken";
+import {ApplicationResponse} from '../interfaces/ApplicationResponse';
 
 export const GET = async () => {
     try {
         console.log(generateHeader());
-        const res = await axios.get(ENDPOINTS.get("all-applications")?.toString() || "", {
+        const res: ApplicationResponse = await axios.get(ENDPOINTS.get("all-applications")?.toString() || "", {
             headers: {
                 'Authorization': 'Bearer ' + getAccessToken()
             }
         })
-        console.log(res);
+        return {
+            applications: res.data,
+            status: res.status
+        }
     }
-    catch (e) {
-        console.log(e);
+    catch (e: any) {
+        console.log(e.response.data);
+        return {
+            status: e.response.status,
+            applications: []
+        }
     }
 }

@@ -1,0 +1,50 @@
+$navy: rgb(33, 35, 47);
+.user-applications-container {
+    height: 100vh;
+    width: calc(100vw - 18vw);
+    display: flex;
+    flex-direction: column;
+    background: #e7e7e7 !important;
+    position: relative;
+    left: 18vw;
+    padding: 20px 20px;
+}
+.user-applications-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 20px; 
+}
+.user-applications-title {
+    color: $navy;
+    font-size: clamp(2rem, 2.3vw, 2.3rem);
+    font-weight: bold;
+}
+.user-applications-new-app-button {
+    font-size: 1rem;
+    padding: 6px 40px;
+    border-radius: 30px;
+    cursor: pointer;
+    background-color: rgb(255, 0, 102);
+    border-color: transparent;
+    color: #fff;
+    transition: 0.2s all ease;
+    &:hover {
+        background-color: rgb(206, 0, 82);
+    }
+}
+.table-edit-button {
+    cursor: pointer;
+    transition: 0.2s all ease;
+    &:hover {
+        color: rgb(206, 0, 82);
+    }
+}
+.table-delete-button {
+    color: red;
+    cursor: pointer;
+    transition: 0.2s all ease;
+    &:hover {
+        color: rgb(122, 0, 0);
+    }
+}

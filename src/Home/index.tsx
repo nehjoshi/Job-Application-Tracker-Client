@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 export const Home = () => {
     return (
-        <Layout showNavItems={true}>
+        <Layout showNav showNavItems={true}>
             <main className='container'>
                 <h4 className='pre-title'>Introducing</h4>
                 <h1>A <span id="color-orange">New</span> Way To Track Your Applications</h1>
