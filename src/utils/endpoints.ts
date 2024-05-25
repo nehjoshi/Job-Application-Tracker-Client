@@ -5,5 +5,6 @@ export const ENDPOINTS: {[key: string]: string} = {
     auth: url + "/user/auth",
     login: url + "/user/auth/login",
     register: url + "/auth/register",
-    "all-applications": url + "/application/all"
+    "all-applications": url + "/application/all",
+    "delete-application": url + "/application"
 }

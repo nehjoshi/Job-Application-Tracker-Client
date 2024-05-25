@@ -13,11 +13,19 @@ import "./UserApplications.scss";
 import { Loader } from '../components/Loader/Loader';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useNavigate } from 'react-router-dom';
+import { DeleteModal } from './DeleteModal';
+import { DELETE } from './deleteApplication';
+import { Alert, Snackbar } from '@mui/material';
 
 export const UserApplications: React.FC = () => {
 
     const [applications, setApplications] = useState<Application[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
+    const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false);
+    const [selectedApplication, setSelectedApplication] = useState<Application | null>(null);
+    const [openSuccessSnackbar, setOpenSuccessSnackbar] = useState<boolean>(false);
+    const navigate = useNavigate();
 
     const fetchApplications = async () => {
         setLoading(true);
@@ -25,12 +33,28 @@ export const UserApplications: React.FC = () => {
         if (res.status === 200) {
             setApplications(res.applications);
         }
+        else navigate('/login');
         setLoading(false);
+    }
+
+    const handleDelete = (app: Application) => {
+        setDeleteModalOpen(true);
+        setSelectedApplication(app);
+    }
+
+    const deleteApplication = async () => {
+        const res = await DELETE(selectedApplication?.applicationId);
+        if (res.status === 204) {
+            setApplications(applications.filter(app => app.applicationId !== selectedApplication?.applicationId));
+        }
+        setDeleteModalOpen(false);
+        setSelectedApplication(null);
+        setOpenSuccessSnackbar(true);
     }
 
     useEffect(() => {
         fetchApplications();
-    }, [])
+    }, []);
 
 
     return (
@@ -69,15 +93,27 @@ export const UserApplications: React.FC = () => {
                                         <TableCell align="center">{app.compensation}</TableCell>
                                         <TableCell align="center">{app.location}</TableCell>
                                         <TableCell align="center">{app.status}</TableCell>
-                                        <TableCell align="center" ><EditIcon className='table-edit-button'/></TableCell>
-                                        <TableCell align="center" ><DeleteIcon className='table-delete-button'/></TableCell>
+                                        <TableCell align="center"><EditIcon className='table-edit-button' /></TableCell>
+                                        <TableCell align="center"><DeleteIcon className='table-delete-button' onClick={() => handleDelete(app)} /></TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>
                         </Table>
                     </TableContainer>
                 }
+                <DeleteModal open={deleteModalOpen} handleClose={() => setDeleteModalOpen(false)} deleteApplication={deleteApplication} />
+                <Snackbar open={openSuccessSnackbar} autoHideDuration={5000} onClose={() => setOpenSuccessSnackbar(false)}>
+                    <Alert
+                        onClose={() => setOpenSuccessSnackbar(false)}
+                        severity='success'
+                        variant='filled'
+                        sx={{ width: "100%" }}
+                    >Deleted application Successfully</Alert>
+                </Snackbar>
             </section>
+
+
+
         </Layout>
     )
 }
