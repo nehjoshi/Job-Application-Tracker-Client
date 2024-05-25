@@ -7,7 +7,7 @@ import {ApplicationResponse} from '../interfaces/ApplicationResponse';
 export const GET = async () => {
     try {
         console.log(generateHeader());
-        const res: ApplicationResponse = await axios.get(ENDPOINTS.get("all-applications")?.toString() || "", {
+        const res: ApplicationResponse = await axios.get(ENDPOINTS["all-applications"], {
             headers: {
                 'Authorization': 'Bearer ' + getAccessToken()
             }

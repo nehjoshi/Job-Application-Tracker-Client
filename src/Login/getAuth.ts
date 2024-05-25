@@ -5,7 +5,7 @@ import { getAccessToken } from "../utils/getAccessToken";
 
 export const GET = async () => {
     try {
-        const res = await axios.get(ENDPOINTS.get("auth")?.toString() || "", {
+        const res = await axios.get(ENDPOINTS["auth"], {
             headers: {
                 'Authorization': 'Bearer ' + getAccessToken()
             }
@@ -23,7 +23,7 @@ export const GET = async () => {
 
 export const POST = async (email: string, password: string, remember: boolean) => {
     try {
-        const res: AuthenticationResponse = await axios.post(ENDPOINTS.get("login")?.toString() || "", {
+        const res: AuthenticationResponse = await axios.post(ENDPOINTS["login"], {
             email: email,
             password: password
         });
