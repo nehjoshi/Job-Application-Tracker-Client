@@ -4,16 +4,18 @@ import { generateHeader } from "../utils/generateRequestHeader";
 import { getAccessToken } from "../utils/getAccessToken";
 import {ApplicationResponse} from '../interfaces/ApplicationResponse';
 
-export const GET = async () => {
+
+export const GET = async (pageNumber: number) => {
     try {
         console.log(generateHeader());
-        const res: ApplicationResponse = await axios.get(ENDPOINTS["all-applications"], {
+        const res: ApplicationResponse = await axios.get(ENDPOINTS["all-applications"] + `/${pageNumber}`, {
             headers: {
                 'Authorization': 'Bearer ' + getAccessToken()
             }
         })
         return {
-            applications: res.data,
+            applications: res.data.applications,
+            count: res.data.count,
             status: res.status
         }
     }
@@ -21,7 +23,8 @@ export const GET = async () => {
         console.log(e.response.data);
         return {
             status: e.response.status,
-            applications: []
+            applications: [],
+            count: 0
         }
     }
 }

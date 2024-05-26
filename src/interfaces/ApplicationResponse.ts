@@ -1,13 +1,9 @@
+import { Application } from "./Application"
+
 export interface ApplicationResponse {
-    data: [{
-        applicationId: number,
-        dateApplied: Date,
-        companyName: string,
-        compensation: string,
-        additionalInfo: string,
-        location: string,
-        positionTitle: string,
-        status: string
-    }],
-    status: number
+    data: {
+        count: number | 0,
+        applications: Application[] | []
+    },
+    status: number | 0
 }
