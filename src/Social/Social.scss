@@ -1,0 +1,26 @@
+$navy: rgb(33, 35, 47);
+.social-container {
+    min-height: 100vh;
+    width: calc(100vw - 18vw);
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    background: #e7e7e7 !important;
+    position: relative;
+    left: 18vw;
+    padding: 20px 20px;
+}
+.social-header {
+    display: flex;
+    flex-direction: column;
+    padding: 20px 20px; 
+    gap: 20px;
+    p {
+        font-size: clamp(1.3rem, 1.5vw, 1.5rem);
+    }
+}
+.social-title {
+    color: $navy;
+    font-size: clamp(2rem, 2.6vw, 2.6rem);
+    font-weight: bold;
+}

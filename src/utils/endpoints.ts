@@ -8,5 +8,6 @@ export const ENDPOINTS: {[key: string]: string} = {
     "all-applications": url + "/application/all",
     "new-application": url + "/application/new",
     "delete-application": url + "/application",
-    "edit-application": url + "/application/edit"
+    "edit-application": url + "/application/edit",
+    social: url + "/application/social"
 }

@@ -36,7 +36,7 @@ const appStatusMapping: any = {
     "REJECTED": "Rejected"
 };
 
-const defaultApplication: Application = {
+export const defaultApplication: Application = {
     companyName: '',
     applicationId: 0,
     dateApplied: new Date(),
@@ -161,7 +161,7 @@ export const UserApplications: React.FC = () => {
                                                     className={`${index % 2 === 0 && 'row-gray'}`}
                                                 >
                                                     <TableCell component="th" scope="row">
-                                                        {app.dateApplied.toString()}
+                                                        {app.dateApplied.toString().slice(0, 10)}
                                                     </TableCell>
                                                     <TableCell align="center">{app.companyName}</TableCell>
                                                     <TableCell align="center">{app.positionTitle}</TableCell>
