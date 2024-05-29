@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Layout } from '../components/Layout';
-import { GET } from './getApplications';
+import { GET, GET_SEARCH } from './getApplications';
 import { Application } from '../interfaces/Application';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -16,7 +16,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { useNavigate } from 'react-router-dom';
 import { DeleteModal } from './DeleteModal';
 import { DELETE } from './deleteApplication';
-import { Alert, Snackbar } from '@mui/material';
+import { Alert, Snackbar, TextField } from '@mui/material';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { EditModal } from './EditModal';
@@ -62,11 +62,17 @@ export const UserApplications: React.FC = () => {
     const [alertMessage, setAlertMessage] = useState("");
     const [newAppModalOpen, setNewAppModalOpen] = useState(false);
     const [refresh, setRefresh] = useState<boolean>(false);
+    const [search, setSearch] = useState<string>("");
     const navigate = useNavigate();
 
     useEffect(() => {
         fetchApplications();
     }, [pageNumber, refresh]);
+
+    useEffect(() => {
+        fetchSearchApplications();
+    }, [search])
+
 
     const fetchApplications = async () => {
         setLoading(true);
@@ -79,6 +85,20 @@ export const UserApplications: React.FC = () => {
         }
         else navigate('/login');
         setLoading(false);
+    }
+
+    const fetchSearchApplications = async () => {
+        if (search) {
+            // setLoading(true);
+            const res = await GET_SEARCH(search);
+            if (res.status === 200) {
+                setApplications(res.applications);
+            }
+            // setLoading(false);
+        }
+        else {
+            setRefresh(refresh => !refresh);
+        }
     }
 
     const handleDelete = (app: Application) => {
@@ -135,11 +155,14 @@ export const UserApplications: React.FC = () => {
                     <h1 className='user-applications-title'>Your Applications</h1>
                     <button onClick={() => setNewAppModalOpen(true)} className='user-applications-new-app-button'>New Application</button>
                 </div>
+                <div className="user-applications-table-header">
+                    <h3>You have <span className='user-applications-count'>{appCount}</span> applications</h3>
+                    <TextField value={search} onChange={e => setSearch(e.target.value)} placeholder='Search company name'></TextField>
+                </div>
                 {loading ? <Loader /> :
                     <>
-                        {applications.length === 0 ? <p className='no-application-message'>No applications yet! Start applying now.</p> :
+                        {applications.length === 0 ? <p className='no-application-message'>{search ? "No applications found" : "No applications yet! Start applying now."}</p> :
                             <div className='user-applications-table'>
-                                <h3>You have <span className='user-applications-count'>{appCount}</span> applications</h3>
                                 <TableContainer component={Paper}>
                                     <Table sx={{ minWidth: 650 }} aria-label="simple table">
                                         <TableHead>
@@ -168,32 +191,34 @@ export const UserApplications: React.FC = () => {
                                                     <TableCell align="center">{app.compensation}</TableCell>
                                                     <TableCell align="center">{app.location}</TableCell>
                                                     <TableCell align="center">{appStatusMapping[app.status]}</TableCell>
-                                                    <TableCell align="center"><EditIcon className='table-edit-button' onClick={() => handleEdit(app)}/></TableCell>
+                                                    <TableCell align="center"><EditIcon className='table-edit-button' onClick={() => handleEdit(app)} /></TableCell>
                                                     <TableCell align="center"><DeleteIcon className='table-delete-button' onClick={() => handleDelete(app)} /></TableCell>
                                                 </TableRow>
                                             ))}
                                         </TableBody>
                                     </Table>
                                 </TableContainer>
-                                <div className="user-applications-pagination-wrapper">
-                                    <ArrowBackIosNewIcon
-                                        className={`user-applications-pagination-icons ${pageNumber === 0 && "pagination-disabled"}`}
-                                        onClick={() => setPageNumber(pageNumber => Math.max(0, pageNumber - 1))}
-                                    />
-                                    <p>Page {pageNumber + 1} of {pageCount}</p>
-                                    <ArrowForwardIosIcon
-                                        className={`user-applications-pagination-icons ${pageNumber + 1 === pageCount && "pagination-disabled"}`}
-                                        onClick={() => setPageNumber(pageNumber => Math.min(pageCount - 1, pageNumber + 1))}
-                                    />
-                                </div>
+                                {!search &&
+                                    <div className="user-applications-pagination-wrapper">
+                                        <ArrowBackIosNewIcon
+                                            className={`user-applications-pagination-icons ${pageNumber === 0 && "pagination-disabled"}`}
+                                            onClick={() => setPageNumber(pageNumber => Math.max(0, pageNumber - 1))}
+                                        />
+                                        <p>Page {pageNumber + 1} of {pageCount}</p>
+                                        <ArrowForwardIosIcon
+                                            className={`user-applications-pagination-icons ${pageNumber + 1 === pageCount && "pagination-disabled"}`}
+                                            onClick={() => setPageNumber(pageNumber => Math.min(pageCount - 1, pageNumber + 1))}
+                                        />
+                                    </div>
+                                }
                             </div>
                         }
                     </>
 
                 }
                 <NewAppModal open={newAppModalOpen} handleClose={() => setNewAppModalOpen(false)} submitApplication={submitApplication} />
-                <EditModal open={editModalOpen} handleClose={() => {setEditModalOpen(false); setSelectedApplication(defaultApplication)}} application={selectedApplication} editApplication={editApplication}/>
-                <DeleteModal open={deleteModalOpen} handleClose={() => {setDeleteModalOpen(false); setSelectedApplication(defaultApplication)}} deleteApplication={deleteApplication} />
+                <EditModal open={editModalOpen} handleClose={() => { setEditModalOpen(false); setSelectedApplication(defaultApplication) }} application={selectedApplication} editApplication={editApplication} />
+                <DeleteModal open={deleteModalOpen} handleClose={() => { setDeleteModalOpen(false); setSelectedApplication(defaultApplication) }} deleteApplication={deleteApplication} />
                 <Snackbar open={openSuccessSnackbar} autoHideDuration={5000} onClose={() => setOpenSuccessSnackbar(false)}>
                     <Alert
                         onClose={() => setOpenSuccessSnackbar(false)}

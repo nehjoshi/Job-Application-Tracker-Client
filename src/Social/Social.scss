@@ -17,6 +17,7 @@ $navy: rgb(33, 35, 47);
     gap: 20px;
     p {
         font-size: clamp(1.3rem, 1.5vw, 1.5rem);
+        color: $navy;
     }
 }
 .social-title {

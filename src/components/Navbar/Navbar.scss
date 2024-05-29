@@ -26,14 +26,13 @@ nav {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border: none;
-    outline: none;
+    border: none !important;
+    outline: none !important;
     border-radius: 20px;
     font-size: 1.2rem;
     background-color: rgb(255, 106, 0);
     padding: 3px 30px;
     color: #fff;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     transition: 0.2s ease all;
     text-transform: uppercase;
     &:hover {

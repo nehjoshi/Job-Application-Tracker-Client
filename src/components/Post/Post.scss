@@ -1,8 +1,17 @@
+$navy: rgb(33, 35, 47);
 .post-container {
     display: flex;
     border-radius: 15px;
     flex-direction: column;
-    width: 100%;
+    width: 40vw;
     background-color: #fff;
     margin: 15px 0px;
+    padding: 20px 20px;
+    color: $navy;
+    span {
+        color: gray;
+    }
+    .post-company-name {
+        color: rgb(255, 0, 102);
+    }
 }

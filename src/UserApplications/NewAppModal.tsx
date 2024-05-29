@@ -56,7 +56,7 @@ export const NewAppModal: React.FC<Props> = ({ open, handleClose, submitApplicat
         setAdditionalInfo("");
         setTitle("");
     }
-
+ 
     return (
         <div>
             <Modal
@@ -66,7 +66,7 @@ export const NewAppModal: React.FC<Props> = ({ open, handleClose, submitApplicat
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
-                    <Typography id="modal-modal-title" variant="h3" component="h3">
+                    <Typography id="modal-modal-title" variant="h3" component="h3" style={{overflow: 'hidden'}}>
                         <b>New Application</b>
                     </Typography>
                     <div className="edit-modal-row">

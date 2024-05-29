@@ -28,3 +28,26 @@ export const GET = async (pageNumber: number) => {
         }
     }
 }
+
+export const GET_SEARCH = async (companyName: string) => {
+    try {
+        const url = ENDPOINTS['search'] + "?company-name=" + companyName;
+        const res = await axios.get(url, {
+            headers: {
+                'Authorization': 'Bearer ' + getAccessToken()
+            }
+        });
+        return {
+            status: res.status,
+            applications: res.data
+        }
+    }
+    catch (e: any) {
+        console.log(e.response.data);
+        return {
+            status: e.response.status,
+            applications: [],
+            count: 0
+        }
+    }
+}
