@@ -27,7 +27,8 @@ import { POST } from './submitApplication';
 const appStatusMapping: any = {
     "APPLIED": "Applied",
     "OFFER": "Offer",
-    "WAITLISTED": "Witlsted",
+    "CODING_TEST": "Coding Test",
+    "WAITLISTED": "Waitlsted",
     "ROUND_1": "Round 1",
     "ROUND_2": "Round 2",
     "ROUND_3": "Round 3",

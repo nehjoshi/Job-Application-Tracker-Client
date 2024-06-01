@@ -71,21 +71,22 @@ export const EditModal: React.FC<Props> = ({ open, handleClose, application, edi
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
-                    <Typography id="modal-modal-title" variant="h3" component="h3">
+                    <Typography id="modal-modal-title" variant="h3" component="h3" style={{overflow: 'hidden'}}>
                         <b>Edit Application</b>
                     </Typography>
                     <div className="edit-modal-row">
-                        <TextField disabled label="Date Applied" variant='outlined' value={application?.dateApplied} />
-                        <TextField onChange={e => setName(e.target.value)} label="Company Name" variant='outlined' value={name} />
-                        <TextField onChange={e => setTitle(e.target.value)} label="Position Title" variant='outlined' value={title} />
+                        <TextField className="modal-row-item" disabled label="Date Applied" variant='standard' value={application?.dateApplied} />
+                        <TextField className="modal-row-item" onChange={e => setName(e.target.value)} label="Company Name" variant='standard' value={name} />
+                        <TextField className="modal-row-item" onChange={e => setTitle(e.target.value)} label="Position Title" variant='standard' value={title} />
 
                     </div>
                     <div className="edit-modal-row">
-                        <TextField onChange={e => setCompensation(e.target.value)} label="Compensation" variant='outlined' value={compensation} />
-                        <TextField onChange={e => setLocation(e.target.value)} label="Location" variant='outlined' value={location} />
-                        <Select placeholder='Application Status' onChange={e => setStatus(e.target.value)} value={status}>
+                        <TextField className="modal-row-item" onChange={e => setCompensation(e.target.value)} label="Compensation" variant='standard' value={compensation} />
+                        <TextField className="modal-row-item" onChange={e => setLocation(e.target.value)} label="Location" variant='standard' value={location} />
+                        <Select className="modal-row-item" placeholder='Application Status' onChange={e => setStatus(e.target.value)} value={status} variant='standard'>
                             <MenuItem value="APPLIED">Applied</MenuItem>
                             <MenuItem value="OFFER">Offer</MenuItem>
+                            <MenuItem value="CODING_TEST">Coding Test</MenuItem>
                             <MenuItem value="WAITLISTED">Waitlisted</MenuItem>
                             <MenuItem value="ROUND_1">Round 1</MenuItem>
                             <MenuItem value="ROUND_2">Round 2</MenuItem>

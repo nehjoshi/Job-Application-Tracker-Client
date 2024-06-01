@@ -117,7 +117,9 @@ $navy: rgb(33, 35, 47);
 .edit-modal-row {
     margin: 18px 0px;
     display: flex;
-    // justify-content: space-evenly;
-    align-items: center;
+    justify-content: space-around;
     gap: 20px;
+}
+.modal-row-item {
+    flex-grow: 1 !important; 
 }

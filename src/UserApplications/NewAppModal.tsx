@@ -70,15 +70,15 @@ export const NewAppModal: React.FC<Props> = ({ open, handleClose, submitApplicat
                         <b>New Application</b>
                     </Typography>
                     <div className="edit-modal-row">
-                        <TextField onChange={e => setName(e.target.value)} label="Company Name" variant='outlined' value={name} />
-                        <TextField onChange={e => setTitle(e.target.value)} label="Position Title" variant='outlined' value={title} />
-                        <TextField onChange={e => setCompensation(e.target.value)} label="Compensation" variant='outlined' value={compensation} />
+                        <TextField className="modal-row-item" onChange={e => setName(e.target.value)} label="Company Name" variant='standard' value={name} />
+                        <TextField className="modal-row-item" onChange={e => setTitle(e.target.value)} label="Position Title" variant='standard' value={title} />
+                        <TextField className="modal-row-item" onChange={e => setCompensation(e.target.value)} label="Compensation" variant='standard' value={compensation} />
 
                     </div>
                     <div className="edit-modal-row">
-                        <TextField onChange={e => setLocation(e.target.value)} label="Location" variant='outlined' value={location} />
-                        <TextField onChange={e => setAdditionalInfo(e.target.value)} label="Addition Info" variant='outlined' value={additionalInfo} />
-                        <Select placeholder='Application Status' onChange={e => setStatus(e.target.value)} value={status} defaultValue='APPLIED'>
+                        <TextField className="modal-row-item" onChange={e => setLocation(e.target.value)} label="Location" variant='standard' value={location} />
+                        <TextField className="modal-row-item" onChange={e => setAdditionalInfo(e.target.value)} label="Addition Info" variant='standard' value={additionalInfo} />
+                        <Select  className="modal-row-item" placeholder='Application Status' onChange={e => setStatus(e.target.value)} variant='standard' value={status} defaultValue='APPLIED'>
                             <MenuItem value="APPLIED">Applied</MenuItem>
                             <MenuItem value="OFFER">Offer</MenuItem>
                             <MenuItem value="WAITLISTED">Waitlisted</MenuItem>
