@@ -1,4 +1,6 @@
-const url: string = "http://localhost:5000/api/v1";
+// const url: string = "http://localhost:5000/api/v1";
+import config from "../config";
+const url: string = config.BASE_URL;
 
 export const ENDPOINTS: {[key: string]: string} = {
     test: url + "/",
