@@ -72,6 +72,7 @@ export const UserApplications: React.FC = () => {
 
     useEffect(() => {
         fetchSearchApplications();
+        document.title = "Job Status Tracker | Your Applications";
     }, [search])
 
 

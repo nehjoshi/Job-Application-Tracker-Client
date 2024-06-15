@@ -1,8 +1,12 @@
+import { useEffect } from 'react';
 import { Layout } from '../components/Layout';
 import './Home.scss';
 import { Link } from 'react-router-dom';
 
 export const Home = () => {
+    useEffect(() => {
+        document.title = "Job Status Tracker";
+    }, []);
     return (
         <Layout showNav showNavItems={true}>
             <main className='container'>

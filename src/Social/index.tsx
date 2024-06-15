@@ -33,7 +33,8 @@ export const Social: React.FC = () => {
     }
 
     useEffect(() => {
-        getPosts()
+        getPosts();
+        document.title = "Job Status Tracker | Social";
     }, [])
 
     useEffect(() => {

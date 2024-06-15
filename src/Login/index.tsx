@@ -27,6 +27,7 @@ export const Login: React.FC = () => {
 
     useEffect(() => {
         tryInitialAuth();
+        document.title = "Job Status Tracker | Login";
     }, []);
 
     const submitCredentials = async () => {
@@ -46,6 +47,9 @@ export const Login: React.FC = () => {
 
     return (
         <Layout showNav showNavItems={false}>
+            <title>
+                Job Tracker | Login
+            </title>
             <section className='container'>
                 <div className="form-container">
                     <h1 className='form-heading'>Welcome Back</h1>
