@@ -10,7 +10,7 @@ $secondary: rgb(255, 106, 0);
     align-items: center;
     background: rgb(2,0,36);
     background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(103,9,121,1) 35%, rgba(0,212,255,1) 100%);
-    .pre-title {
+    .preTitle {
         font-size: clamp(1.3rem, 1.5vw, 1.5rem);
     }
     h4, h1, p {
@@ -25,10 +25,10 @@ $secondary: rgb(255, 106, 0);
         font-size: clamp(1.3rem, 1.5vw, 1.5rem);
     }
 }
-#color-orange {
+.colorOrange {
     color: $secondary;
 }
-.try-button {
+.tryButton {
     display: flex;
     flex-direction: column;
     justify-content: center;

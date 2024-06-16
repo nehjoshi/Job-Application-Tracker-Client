@@ -9,7 +9,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import "./UserApplications.scss";
+import styles from "./UserApplications.module.scss";
 import { Loader } from '../components/Loader/Loader';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -152,38 +152,38 @@ export const UserApplications: React.FC = () => {
 
     return (
         <Layout showSidebar={true} currentPage="apps">
-            <section className="user-applications-container">
-                <div className='user-applications-header'>
-                    <h1 className='user-applications-title'>Your Applications</h1>
-                    <button onClick={() => setNewAppModalOpen(true)} className='user-applications-new-app-button'>New Application</button>
+            <section className={styles.userApplicationsContainer}>
+                <div className={styles.userApplicationsHeader}>
+                    <h1 className={styles.userApplicationsTitle}>Your Applications</h1>
+                    <button onClick={() => setNewAppModalOpen(true)} className={styles.newAppButton}>New Application</button>
                 </div>
-                <div className="user-applications-table-header">
-                    <h3>You have <span className='user-applications-count'>{appCount}</span> applications</h3>
+                <div className={styles.userApplicationsTableHeader}>
+                    <h3>You have <span className={styles.count}>{appCount}</span> applications</h3>
                     <TextField value={search} onChange={e => setSearch(e.target.value)} placeholder='Search company name'></TextField>
                 </div>
                 {loading ? <Loader /> :
                     <>
-                        {applications.length === 0 ? <p className='no-application-message'>{search ? "No applications found" : "No applications yet! Start applying now."}</p> :
-                            <div className='user-applications-table'>
+                        {applications.length === 0 ? <p className={styles.noApplicationMessage}>{search ? "No applications found" : "No applications yet! Start applying now."}</p> :
+                            <div className={styles.table}>
                                 <TableContainer component={Paper}>
                                     <Table sx={{ minWidth: 650 }} aria-label="simple table">
                                         <TableHead>
-                                            <TableRow className='table-header-row'>
-                                                <TableCell className='table-header-row-cell'><b>Date Applied</b></TableCell>
-                                                <TableCell className='table-header-row-cell' align="center"><b>Company</b></TableCell>
-                                                <TableCell className='table-header-row-cell' align="center"><b>Title</b></TableCell>
-                                                <TableCell className='table-header-row-cell' align="center"><b>Compensation</b></TableCell>
-                                                <TableCell className='table-header-row-cell' align="center"><b>Location</b></TableCell>
-                                                <TableCell className='table-header-row-cell' align="center"><b>Status</b></TableCell>
-                                                <TableCell className='table-header-row-cell' align="center"><b>Modify</b></TableCell>
-                                                <TableCell className='table-header-row-cell' align="center"><b>Delete</b></TableCell>
+                                            <TableRow className={`${styles.row}`}>
+                                                <TableCell className={styles.rowCell}><b>Date Applied</b></TableCell>
+                                                <TableCell className={styles.rowCell} align="center"><b>Company</b></TableCell>
+                                                <TableCell className={styles.rowCell} align="center"><b>Title</b></TableCell>
+                                                <TableCell className={styles.rowCell} align="center"><b>Compensation</b></TableCell>
+                                                <TableCell className={styles.rowCell} align="center"><b>Location</b></TableCell>
+                                                <TableCell className={styles.rowCell} align="center"><b>Status</b></TableCell>
+                                                <TableCell className={styles.rowCell} align="center"><b>Modify</b></TableCell>
+                                                <TableCell className={styles.rowCell} align="center"><b>Delete</b></TableCell>
                                             </TableRow>
                                         </TableHead>
                                         <TableBody>
                                             {applications.map((app, index) => (
                                                 <TableRow
                                                     key={app.applicationId}
-                                                    className={`${index % 2 === 0 && 'row-gray'}`}
+                                                    className={`${index % 2 === 0 && styles.rowGray}`}
                                                 >
                                                     <TableCell component="th" scope="row">
                                                         {app.dateApplied.toString().slice(0, 10)}
@@ -193,22 +193,22 @@ export const UserApplications: React.FC = () => {
                                                     <TableCell align="center">{app.compensation}</TableCell>
                                                     <TableCell align="center">{app.location}</TableCell>
                                                     <TableCell align="center">{appStatusMapping[app.status]}</TableCell>
-                                                    <TableCell align="center"><EditIcon className='table-edit-button' onClick={() => handleEdit(app)} /></TableCell>
-                                                    <TableCell align="center"><DeleteIcon className='table-delete-button' onClick={() => handleDelete(app)} /></TableCell>
+                                                    <TableCell align="center"><EditIcon className={styles.editButton} onClick={() => handleEdit(app)} /></TableCell>
+                                                    <TableCell align="center"><DeleteIcon className={styles.deleteButton} onClick={() => handleDelete(app)} /></TableCell>
                                                 </TableRow>
                                             ))}
                                         </TableBody>
                                     </Table>
                                 </TableContainer>
                                 {!search &&
-                                    <div className="user-applications-pagination-wrapper">
+                                    <div className={styles.paginationWrapper}>
                                         <ArrowBackIosNewIcon
-                                            className={`user-applications-pagination-icons ${pageNumber === 0 && "pagination-disabled"}`}
+                                            className={`${styles.paginationIcons} ${pageNumber === 0 && styles.paginationDisabled}`}
                                             onClick={() => setPageNumber(pageNumber => Math.max(0, pageNumber - 1))}
                                         />
                                         <p>Page {pageNumber + 1} of {pageCount}</p>
                                         <ArrowForwardIosIcon
-                                            className={`user-applications-pagination-icons ${pageNumber + 1 === pageCount && "pagination-disabled"}`}
+                                            className={`${styles.paginationIcons} ${pageNumber + 1 === pageCount && styles.paginationDisabled}`}
                                             onClick={() => setPageNumber(pageNumber => Math.min(pageCount - 1, pageNumber + 1))}
                                         />
                                     </div>

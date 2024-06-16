@@ -11,28 +11,28 @@ $secondary: rgb(255, 106, 0);
     background: rgb(2,0,36);
     background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(103,9,121,1) 35%, rgba(0,212,255,1) 100%);
 }
-.form-container {
+.formContainer {
     display: flex;
     flex-direction: column;
     background-color: #fff;
     min-height: 70vh;
     padding: 20px 50px;
 }
-.form-heading {
+.formHeading {
     color: $heading-color !important;
     font-size: clamp(2.1rem, 2.3vw, 2.3rem) !important;
     margin-bottom: 30px !important;
     // font-size: clamp
 }
-.form-input {
+.formInput {
     margin: 10px 0px !important;
 }
-.remember-me-row {
+.rememberMeRow {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
-.checkbox-container {
+.checkboxContainer {
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -42,11 +42,11 @@ $secondary: rgb(255, 106, 0);
     width: 5px;
     margin-right: 5px !important;
 }
-.forgot-password {
+.forgotPassword {
     color: $heading-color;
     cursor: pointer;
 }
-.submit-button {
+.submitButton {
     margin: 20px 0px;
     width: 100%;
     outline: none;
@@ -62,16 +62,16 @@ $secondary: rgb(255, 106, 0);
         background-color: #0f97e5;
     }
 }
-.register-container {
+.registerContainer {
     display: flex;
     align-items: center;
     gap: 5px;
 }
-.signup-link {
+.signupLink {
     color: $heading-color;
     cursor: pointer;
 }
-.loader-container {
+.loaderContainer {
     height: 60px;
     margin-top: 30px;
     display: flex;

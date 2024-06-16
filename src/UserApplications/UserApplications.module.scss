@@ -1,7 +1,7 @@
 $navy: rgb(33, 35, 47);
-.user-applications-container {
+.userApplicationsContainer {
     min-height: 100vh;
-    width: calc(100vw - 18vw);
+    width: calc(100% - 18vw);
     display: flex;
     flex-direction: column;
     background: #e7e7e7 !important;
@@ -9,21 +9,20 @@ $navy: rgb(33, 35, 47);
     left: 18vw;
     padding: 20px 30px;
     align-items: center;
-    // border: 5px solid red;
 }
-.user-applications-header {
+.userApplicationsHeader {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 20px 20px; 
     width: 100%;
 }
-.user-applications-title {
+.userApplicationsTitle {
     color: $navy;
     font-size: clamp(2rem, 2.3vw, 2.3rem);
     font-weight: bold;
 }
-.user-applications-table-header {
+.userApplicationsTableHeader {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -31,7 +30,7 @@ $navy: rgb(33, 35, 47);
     margin: 20px;
     width: 100%;
 }
-.user-applications-table {
+.table {
     h3 {
         margin: 10px 0px;
     }
@@ -39,10 +38,10 @@ $navy: rgb(33, 35, 47);
     padding: 20px 20px;
     width: 100%;
 }
-.user-applications-count {
+.count {
     color: rgb(255, 0, 102);
 }
-.user-applications-new-app-button {
+.newAppButton {
     font-size: 1rem;
     padding: 6px 40px;
     border-radius: 30px;
@@ -56,24 +55,24 @@ $navy: rgb(33, 35, 47);
     }
 }
 
-.table-header-row {
+.row {
     background-color: $navy;
     color: #fff !important;
 }
-.table-header-row-cell {
+.rowCell {
     color: #e7e7e7 !important;
 }
-.row-gray {
+.rowGray {
     background-color: #e7e7e7;
 }
-.table-edit-button {
+.editButton {
     cursor: pointer;
     transition: 0.2s all ease;
     &:hover {
         color: rgb(206, 0, 82);
     }
 }
-.table-delete-button {
+.deleteButton {
     color: red;
     cursor: pointer;
     transition: 0.2s all ease;
@@ -84,12 +83,12 @@ $navy: rgb(33, 35, 47);
 #modal-modal-description {
     font-size: 1.2rem !important;
 }
-.no-application-message {
+.noApplicationMessage {
     text-align: center;
     font-size: 1.2rem;
     margin: 20px 0px;
 }
-.user-applications-pagination-wrapper {
+.paginationWrapper {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -97,7 +96,7 @@ $navy: rgb(33, 35, 47);
     color: $navy;
     padding: 0px 10px;
 }
-.user-applications-pagination-icons {
+.paginationIcons {
     cursor: pointer;
     border-radius: 50%;
     padding: 10px 10px;
@@ -107,19 +106,19 @@ $navy: rgb(33, 35, 47);
         background-color: rgb(214, 214, 214);
     }
 }
-.pagination-disabled {
+.paginationDisabled {
     cursor: not-allowed;
     color: gray;
     &:hover {
         background-color: inherit;
     }
 }
-.edit-modal-row {
+.editModalRow {
     margin: 18px 0px;
     display: flex;
     justify-content: space-around;
     gap: 20px;
 }
-.modal-row-item {
+.modalRowItem {
     flex-grow: 1 !important; 
 }

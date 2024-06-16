@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { Application } from '../interfaces/Application';
 import { MenuItem, Select, TextField } from '@mui/material';
+import styles from "./UserApplications.module.scss";
 
 interface Props {
     open: boolean,
@@ -46,7 +47,8 @@ export const NewAppModal: React.FC<Props> = ({ open, handleClose, submitApplicat
             location: location,
             status: status,
             additionalInfo: additionalInfo,
-            compensation: compensation
+            compensation: compensation,
+            dateApplied: new Date().toISOString()
         }
         submitApplication(obj);
         setName("");
@@ -69,16 +71,16 @@ export const NewAppModal: React.FC<Props> = ({ open, handleClose, submitApplicat
                     <Typography id="modal-modal-title" variant="h3" component="h3" style={{overflow: 'hidden'}}>
                         <b>New Application</b>
                     </Typography>
-                    <div className="edit-modal-row">
-                        <TextField className="modal-row-item" onChange={e => setName(e.target.value)} label="Company Name" variant='standard' value={name} />
-                        <TextField className="modal-row-item" onChange={e => setTitle(e.target.value)} label="Position Title" variant='standard' value={title} />
-                        <TextField className="modal-row-item" onChange={e => setCompensation(e.target.value)} label="Compensation" variant='standard' value={compensation} />
+                    <div className={styles.editModalRow}>
+                        <TextField className={styles.modalRowItem} onChange={e => setName(e.target.value)} label="Company Name" variant='standard' value={name} />
+                        <TextField className={styles.modalRowItem} onChange={e => setTitle(e.target.value)} label="Position Title" variant='standard' value={title} />
+                        <TextField className={styles.modalRowItem} onChange={e => setCompensation(e.target.value)} label="Compensation" variant='standard' value={compensation} />
 
                     </div>
-                    <div className="edit-modal-row">
-                        <TextField className="modal-row-item" onChange={e => setLocation(e.target.value)} label="Location" variant='standard' value={location} />
-                        <TextField className="modal-row-item" onChange={e => setAdditionalInfo(e.target.value)} label="Addition Info" variant='standard' value={additionalInfo} />
-                        <Select  className="modal-row-item" placeholder='Application Status' onChange={e => setStatus(e.target.value)} variant='standard' value={status} defaultValue='APPLIED'>
+                    <div className={styles.editModalRow}>
+                        <TextField className={styles.modalRowItem} onChange={e => setLocation(e.target.value)} label="Location" variant='standard' value={location} />
+                        <TextField className={styles.modalRowItem} onChange={e => setAdditionalInfo(e.target.value)} label="Addition Info" variant='standard' value={additionalInfo} />
+                        <Select className={styles.modalRowItem} placeholder='Application Status' onChange={e => setStatus(e.target.value)} variant='standard' value={status} defaultValue='APPLIED'>
                             <MenuItem value="APPLIED">Applied</MenuItem>
                             <MenuItem value="OFFER">Offer</MenuItem>
                             <MenuItem value="WAITLISTED">Waitlisted</MenuItem>

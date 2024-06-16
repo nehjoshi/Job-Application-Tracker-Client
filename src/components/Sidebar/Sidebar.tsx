@@ -1,5 +1,5 @@
 import React from 'react';
-import "./Sidebar.scss";
+import styles from "./Sidebar.module.scss";
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import ConnectWithoutContactIcon from '@mui/icons-material/ConnectWithoutContact';
@@ -16,25 +16,25 @@ export const Sidebar: React.FC<{currentPage: string}> = ({currentPage}) => {
     }
 
     return (
-        <div className="sidebar-container">
-            <h2 className="sidebar-title">Job Tracker</h2>
-            <hr className="sidebar-divider" />
-            <div className="sidebar-menu">
-                <div className={`sidebar-menu-item ${currentPage === 'dashboard' && "item-selected"}`}>
-                    <DashboardIcon className='sidebar-icon' />
-                    <span className='sidebar-item-name'>Dashboard</span>
+        <div className={styles.container}>
+            <h2 className={styles.title}>Job Tracker</h2>
+            <hr className={styles.divider} />
+            <div className={styles.menu}>
+                <div className={`${styles.menuItem} ${currentPage === 'dashboard' && styles.itemSelected}`}>
+                    <DashboardIcon />
+                    <span>Dashboard</span>
                 </div>
-                <Link to='/applications' className={`sidebar-menu-item ${currentPage === 'apps' && "item-selected"}`}>
-                    <MenuBookIcon className='sidebar-icon' />
-                    <span className='sidebar-item-name'>My Applications</span>
+                <Link to='/applications'className={`${styles.menuItem} ${currentPage === 'apps' && styles.itemSelected}`}>
+                    <MenuBookIcon />
+                    <span>My Applications</span>
                 </Link>
-                <Link to="/social" className={`sidebar-menu-item ${currentPage === 'social' && "item-selected"}`}>
-                    <ConnectWithoutContactIcon className='sidebar-icon' />
-                    <span className='sidebar-item-name'>Social</span>
+                <Link to="/social" className={`${styles.menuItem} ${currentPage === 'social' && styles.itemSelected}`}>
+                    <ConnectWithoutContactIcon />
+                    <span>Social</span>
                 </Link>
             </div>
-            <div className='sidebar-footer'>
-                <hr className="sidebar-divider" />
+            <div className={styles.footer}>
+                <hr className={styles.divider} />
                 <h3 className='sidebar-logout' onClick={handleSignOut}>Sign Out</h3>
             </div>
         </div>

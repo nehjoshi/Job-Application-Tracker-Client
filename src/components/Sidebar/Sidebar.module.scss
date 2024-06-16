@@ -1,4 +1,4 @@
-.sidebar-container {
+.container {
     position: fixed;
     left: 0;
     top: 0;
@@ -7,19 +7,19 @@
     background-color: rgb(33, 35, 47);
     padding: 40px 0px;
 }
-.sidebar-title {
+.title {
     color: #fff;
     text-align: center;
     margin-bottom: 10px;
     font-size: clamp(1.4rem, 1.6vw, 1.6rem);
     cursor: pointer;
 }
-.sidebar-divider {
+.divider {
     margin: 0 auto;
     width: 90%;
     border: 0.01px solid rgb(84, 84, 84);
 }
-.sidebar-menu {
+.menu {
     margin: 20px 0px;
     display: flex;
     flex-direction: column;
@@ -27,7 +27,7 @@
     font-size: clamp(0.9rem, 1.5vw, 1.5rem);
     gap: 15px;
 }
-.sidebar-menu-item {
+.menuItem {
     display: flex;
     gap: 20px;
     align-items: center;
@@ -38,10 +38,10 @@
         background-color: rgb(61, 65, 87);
     }
 }
-.item-selected {
+.itemSelected {
     color: rgb(255, 0, 102);
 }
-.sidebar-footer {
+.footer {
     bottom: 40px;
     position: absolute;
     width: 100%;
