@@ -4,8 +4,9 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { Application } from '../interfaces/Application';
-import { MenuItem, Select, TextField } from '@mui/material';
+import { Autocomplete, MenuItem, Select, TextField } from '@mui/material';
 import styles from "./UserApplications.module.scss";
+import { listOfCities } from '../utils/data';
 
 interface Props {
     open: boolean,
@@ -58,7 +59,7 @@ export const NewAppModal: React.FC<Props> = ({ open, handleClose, submitApplicat
         setAdditionalInfo("");
         setTitle("");
     }
- 
+
     return (
         <div>
             <Modal
@@ -68,7 +69,7 @@ export const NewAppModal: React.FC<Props> = ({ open, handleClose, submitApplicat
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
-                    <Typography id="modal-modal-title" variant="h3" component="h3" style={{overflow: 'hidden'}}>
+                    <Typography id="modal-modal-title" variant="h3" component="h3" style={{ overflow: 'hidden' }}>
                         <b>New Application</b>
                     </Typography>
                     <div className={styles.editModalRow}>
@@ -78,7 +79,23 @@ export const NewAppModal: React.FC<Props> = ({ open, handleClose, submitApplicat
 
                     </div>
                     <div className={styles.editModalRow}>
-                        <TextField className={styles.modalRowItem} onChange={e => setLocation(e.target.value)} label="Location" variant='standard' value={location} />
+                        {/* <TextField className={styles.modalRowItem} onChange={e => setLocation(e.target.value)} label="Location" variant='standard' value={location} /> */}
+                        <Autocomplete
+                            disablePortal
+                            id="combo-box-demo"
+                            options={listOfCities}
+                            renderInput={(params) =>
+                                <TextField
+                                    variant='standard'
+                                    {...params}
+                                    label="Location"
+                                />}
+                            className={styles.modalRowItem}
+                            onChange={(event, value) => setLocation(value || "Remote")}
+                            defaultValue={"Remote"}
+                            value={location || "Remote"}
+                            sx={{ width: 120 }}
+                        />
                         <TextField className={styles.modalRowItem} onChange={e => setAdditionalInfo(e.target.value)} label="Addition Info" variant='standard' value={additionalInfo} />
                         <Select className={styles.modalRowItem} placeholder='Application Status' onChange={e => setStatus(e.target.value)} variant='standard' value={status} defaultValue='APPLIED'>
                             <MenuItem value="APPLIED">Applied</MenuItem>

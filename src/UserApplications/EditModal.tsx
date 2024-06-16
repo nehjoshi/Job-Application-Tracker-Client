@@ -4,13 +4,14 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { Application } from '../interfaces/Application';
-import { MenuItem, Select, TextField } from '@mui/material';
+import { Autocomplete, MenuItem, Select, TextField } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import styles from './UserApplications.module.scss';
 import dayjs from 'dayjs';
+import { listOfCities } from '../utils/data';
 
 interface Props {
     open: boolean,
@@ -92,7 +93,23 @@ export const EditModal: React.FC<Props> = ({ open, handleClose, application, edi
                     </div>
                     <div className={styles.editModalRow}>
                         <TextField className={styles.modalRowItem} onChange={e => setCompensation(e.target.value)} label="Compensation" variant='standard' value={compensation} />
-                        <TextField className={styles.modalRowItem} onChange={e => setLocation(e.target.value)} label="Location" variant='standard' value={location} />
+                        {/* <TextField className={styles.modalRowItem} onChange={e => setLocation(e.target.value)} label="Location" variant='standard' value={location} /> */}
+                        <Autocomplete
+                            disablePortal
+                            id="combo-box-demo"
+                            options={listOfCities}
+                            renderInput={(params) =>
+                                <TextField
+                                    variant='standard'
+                                    {...params}
+                                    label="Location"
+                                />}
+                            className={styles.modalRowItem}
+                            onChange={(event, value) => setLocation(value || "Remote")}
+                            defaultValue={"Remote"}
+                            value={location || "Remote"}
+                            sx={{ width: 120 }}
+                        />
                         <Select className={styles.modalRowItem} placeholder='Application Status' onChange={e => setStatus(e.target.value)} value={status} variant='standard'>
                             <MenuItem value="APPLIED">Applied</MenuItem>
                             <MenuItem value="OFFER">Offer</MenuItem>
