@@ -31,7 +31,7 @@ export const NewAppModal: React.FC<Props> = ({ open, handleClose, submitApplicat
     const [name, setName] = useState<string>("");
     const [title, setTitle] = useState<string>("");
     const [compensation, setCompensation] = useState<string>("");
-    const [location, setLocation] = useState<string>("");
+    const [location, setLocation] = useState<string | null>("");
     const [status, setStatus] = useState<string>('APPLIED');
     const [additionalInfo, setAdditionalInfo] = useState<string>("");
 
@@ -45,7 +45,7 @@ export const NewAppModal: React.FC<Props> = ({ open, handleClose, submitApplicat
         let obj = {
             companyName: name,
             positionTitle: title,
-            location: location,
+            location: location || "",
             status: status,
             additionalInfo: additionalInfo,
             compensation: compensation,
@@ -84,6 +84,7 @@ export const NewAppModal: React.FC<Props> = ({ open, handleClose, submitApplicat
                             disablePortal
                             id="combo-box-demo"
                             options={listOfCities}
+                            freeSolo
                             renderInput={(params) =>
                                 <TextField
                                     variant='standard'
@@ -91,9 +92,11 @@ export const NewAppModal: React.FC<Props> = ({ open, handleClose, submitApplicat
                                     label="Location"
                                 />}
                             className={styles.modalRowItem}
-                            onChange={(event, value) => setLocation(value || "Remote")}
+                            onChange={(event, value) => setLocation(value)}
                             defaultValue={"Remote"}
-                            value={location || "Remote"}
+                            value={location}
+                            inputValue={location || ""}
+                            onInputChange={(event, value) => setLocation(value)}
                             sx={{ width: 120 }}
                         />
                         <TextField className={styles.modalRowItem} onChange={e => setAdditionalInfo(e.target.value)} label="Addition Info" variant='standard' value={additionalInfo} />
