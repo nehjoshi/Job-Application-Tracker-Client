@@ -23,7 +23,8 @@ export const Login: React.FC = () => {
         const tryInitialAuth = async () => {
             const res = await GET();
             if (res.status === 200) {
-                navigate("/applications")
+                setUser(res.user);
+                navigate("/dashboard")
             }
     
         }
@@ -38,7 +39,7 @@ export const Login: React.FC = () => {
         console.log(res.status, res.message);
         if (res.status === 200) {
             setUser(res.user);
-            navigate("/applications");
+            navigate("/dashboard");
         }
         else {
             setFailureMessage(res.message);

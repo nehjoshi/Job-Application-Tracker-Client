@@ -11,5 +11,6 @@ export const ENDPOINTS: {[key: string]: string} = {
     "delete-application": url + "/application",
     "edit-application": url + "/application/edit",
     social: url + "/application/social",
-    search: url + "/application"
+    search: url + "/application",
+    statistics: url + "/application/statistics"
 }

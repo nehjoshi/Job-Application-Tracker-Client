@@ -10,7 +10,7 @@ export const GET = async () => {
                 'Authorization': 'Bearer ' + getAccessToken()
             }
         });
-        return {status: res.status}
+        return {status: res.status, user: res.data}
     }
     catch(e: any) {
         console.log(e);
