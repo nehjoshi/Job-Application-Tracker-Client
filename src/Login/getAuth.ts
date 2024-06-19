@@ -30,7 +30,7 @@ export const POST = async (email: string, password: string, remember: boolean) =
         if (remember) localStorage.setItem("accessToken", res.data.accessToken);
         else sessionStorage.setItem("accessToken", res.data.accessToken);
         return {
-            ...res.data,
+            user: res.data,
             status: res.status
         }
 

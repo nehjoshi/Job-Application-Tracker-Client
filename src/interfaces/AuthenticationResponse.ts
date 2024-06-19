@@ -1,7 +1,9 @@
 export interface AuthenticationResponse {
     data: {
         email: string,
-        password: string,
+        userId: string,
+        firstName: string,
+        lastName: string,
         accessToken: string
     },
     status?: number

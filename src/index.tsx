@@ -6,6 +6,8 @@ import { Home } from './Home';
 import { Login } from './Login';
 import { UserApplications } from './UserApplications';
 import { Social } from './Social';
+import { Dashboard } from './Dashboard';
+import { UserProvider } from './context/UserContext';
 
 const router = createBrowserRouter([
   {
@@ -23,6 +25,10 @@ const router = createBrowserRouter([
   {
     path: "/social",
     element: <Social />
+  },
+  {
+    path: "/dashboard",
+    element: <Dashboard />
   }
 ])
 
@@ -30,6 +36,8 @@ const rootElement = document.getElementById('root') as HTMLElement;
 const root = ReactDOM.createRoot(rootElement);
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <UserProvider>
+      <RouterProvider router={router} />
+    </UserProvider>
   </React.StrictMode>
 );

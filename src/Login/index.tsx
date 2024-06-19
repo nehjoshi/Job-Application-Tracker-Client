@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Layout } from '../components/Layout';
 import styles from "./Login.module.scss";
 import TextField from '@mui/material/TextField';
@@ -6,6 +6,7 @@ import CheckBox from '@mui/material/Checkbox';
 import { Loader } from '../components/Loader/Loader';
 import { GET, POST } from './getAuth';
 import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../context/UserContext';
 
 export const Login: React.FC = () => {
 
@@ -15,20 +16,20 @@ export const Login: React.FC = () => {
     const [password, setPassword] = useState("");
     const [failureMessage, setFailureMessage] = useState("");
     const [remember, setRemember] = useState(true);
+    const { setUser } = useContext(UserContext);
     const navigate = useNavigate();
 
-    const tryInitialAuth = async () => {
-        const res = await GET();
-        if (res.status === 200) {
-            navigate("/applications")
-        }
-
-    }
-
     useEffect(() => {
+        const tryInitialAuth = async () => {
+            const res = await GET();
+            if (res.status === 200) {
+                navigate("/applications")
+            }
+    
+        }
         tryInitialAuth();
         document.title = "Job Status Tracker | Login";
-    }, []);
+    }, [navigate]);
 
     const submitCredentials = async () => {
         setLoading(true);
@@ -36,6 +37,7 @@ export const Login: React.FC = () => {
         const res = await POST(email, password, remember);
         console.log(res.status, res.message);
         if (res.status === 200) {
+            setUser(res.user);
             navigate("/applications");
         }
         else {

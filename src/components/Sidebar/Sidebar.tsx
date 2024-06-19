@@ -20,11 +20,11 @@ export const Sidebar: React.FC<{currentPage: string}> = ({currentPage}) => {
             <h2 className={styles.title}>Job Tracker</h2>
             <hr className={styles.divider} />
             <div className={styles.menu}>
-                <div className={`${styles.menuItem} ${currentPage === 'dashboard' && styles.itemSelected}`}>
+                <Link to='/dashboard' className={`${styles.menuItem} ${currentPage === 'dashboard' && styles.itemSelected}`}>
                     <DashboardIcon />
                     <span>Dashboard</span>
-                </div>
-                <Link to='/applications'className={`${styles.menuItem} ${currentPage === 'apps' && styles.itemSelected}`}>
+                </Link>
+                <Link to='/applications' className={`${styles.menuItem} ${currentPage === 'apps' && styles.itemSelected}`}>
                     <MenuBookIcon />
                     <span>My Applications</span>
                 </Link>
