@@ -10,7 +10,8 @@ interface Response {
         offerCount: number,
         rejectedCount: number,
         stageCount: number,
-        topLocations: Array<{ [key: string]: number }>
+        topLocations: Array<{ [key: string]: number }>,
+        fiveDayAppCount: Array<{ [key: string]: number}>
     }
 }
 

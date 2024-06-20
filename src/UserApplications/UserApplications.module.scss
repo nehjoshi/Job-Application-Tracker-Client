@@ -19,7 +19,7 @@ $navy: rgb(33, 35, 47);
 }
 .userApplicationsTitle {
     color: $navy;
-    font-size: clamp(2rem, 2.3vw, 2.3rem);
+    font-size: clamp(1.5rem, 2.3vw, 2.3rem);
     font-weight: bold;
 }
 .userApplicationsTableHeader {
@@ -29,6 +29,7 @@ $navy: rgb(33, 35, 47);
     padding: 0px 30px;
     margin: 20px;
     width: 100%;
+    font-size: clamp(0.6rem, 1vw, 1rem);
 }
 .table {
     h3 {
@@ -42,7 +43,7 @@ $navy: rgb(33, 35, 47);
     color: rgb(255, 0, 102);
 }
 .newAppButton {
-    font-size: 1rem;
+    font-size: clamp(0.7rem, 1vw, 1rem);
     padding: 6px 40px;
     border-radius: 30px;
     cursor: pointer;
@@ -121,4 +122,18 @@ $navy: rgb(33, 35, 47);
 }
 .modalRowItem {
     flex-grow: 1 !important; 
+}
+@media screen and (max-width: 1024px) {
+    .userApplicationsContainer {
+        width: 100%;
+        position: relative;
+        left: 0px;
+        top: 8vh;
+    }
+    .userApplicationsHeader {
+        padding: 10px 10px;
+    }
+    .newAppButton {
+        padding: 5px 20px;
+    }
 }
