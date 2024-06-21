@@ -32,19 +32,6 @@ export const Login: React.FC = () => {
         document.title = "Job Status Tracker | Login";
     }, [navigate, setUser]);
 
-    useEffect(() => {
-        const handleKeyDown = (event: KeyboardEvent) => {
-            if (event.key === "Enter") {
-                submitCredentials();
-            }
-        };
-        document.addEventListener("keydown", handleKeyDown);
-
-        return () => {
-            document.removeEventListener("keydown", handleKeyDown);
-        };
-    }, [email, password, remember]);
-
     const submitCredentials = async () => {
         setLoading(true);
         setFailureMessage("");
@@ -67,7 +54,7 @@ export const Login: React.FC = () => {
                 Job Tracker | Login
             </title>
             <section className={styles.container}>
-                <div className={styles.formContainer}>
+                <form className={styles.formContainer} onSubmit={(e) => e.preventDefault()}>
                     <h1 className={styles.formHeading}>Welcome Back</h1>
                     <TextField onChange={e => setEmail(e.target.value)} className={styles.formInput} label="Email" variant="outlined"></TextField>
                     <TextField onChange={e => setPassword(e.target.value)} className={styles.formInput} type="password" label="Password" variant="outlined"></TextField>
@@ -86,7 +73,7 @@ export const Login: React.FC = () => {
                         {loading && <Loader />}
                         {failureMessage}
                     </div>
-                </div>
+                </form>
             </section>
         </Layout>
     )
