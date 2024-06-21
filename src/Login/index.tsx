@@ -4,9 +4,10 @@ import styles from "./Login.module.scss";
 import TextField from '@mui/material/TextField';
 import CheckBox from '@mui/material/Checkbox';
 import { Loader } from '../components/Loader/Loader';
-import { GET, POST } from './getAuth';
+import { POST } from './getAuth';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../context/UserContext';
+import { GET_AUTH } from '../utils/checkAuth';
 
 export const Login: React.FC = () => {
 
@@ -21,16 +22,28 @@ export const Login: React.FC = () => {
 
     useEffect(() => {
         const tryInitialAuth = async () => {
-            const res = await GET();
+            const res = await GET_AUTH();
             if (res.status === 200) {
                 setUser(res.user);
                 navigate("/dashboard")
             }
-    
         }
         tryInitialAuth();
         document.title = "Job Status Tracker | Login";
-    }, [navigate]);
+    }, [navigate, setUser]);
+
+    useEffect(() => {
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === "Enter") {
+                submitCredentials();
+            }
+        };
+        document.addEventListener("keydown", handleKeyDown);
+
+        return () => {
+            document.removeEventListener("keydown", handleKeyDown);
+        };
+    }, [email, password, remember]);
 
     const submitCredentials = async () => {
         setLoading(true);

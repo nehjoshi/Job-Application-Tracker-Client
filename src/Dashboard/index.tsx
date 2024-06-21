@@ -9,12 +9,13 @@ import ForwardIcon from '@mui/icons-material/Forward';
 import { PieChart } from '@mui/x-charts/PieChart';
 import { GET } from './getStats';
 import { LineChart } from '@mui/x-charts';
+import { useNavigate } from 'react-router-dom';
+import { GET_AUTH } from '../utils/checkAuth';
 
 export const Dashboard: React.FC = () => {
 
-    const { user } = useContext(UserContext);
+    const { user, setUser } = useContext(UserContext);
     const [totalCount, setTotalCount] = useState(0);
-    const [appliedCount, setAppliedCount] = useState(0);
     const [offerCount, setOfferCount] = useState(0);
     const [rejectedCount, setRejectedCount] = useState(0);
     const [stageCount, setStageCount] = useState(0);
@@ -22,13 +23,26 @@ export const Dashboard: React.FC = () => {
     const [dateX, setDateX] = useState<Array<Date>>();
     const [dateY, setDateY] = useState<Array<number>>();
     const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const tryInitialAuth = async () => {
+            console.log("Trying Initial Auth");
+            const res = await GET_AUTH();
+            if (res.status === 200) {
+                setUser(res.user);
+                navigate("/dashboard")
+            }
+        }
+        !user && tryInitialAuth();
+        document.title = "Job Status Tracker | Dashboard";
+    }, [user, navigate, setUser]);
 
     useEffect(() => {
         const fetchStatistics = async () => {
             const res = await GET();
             if (res.status === 200) {
                 setTotalCount(res.data?.totalCount!);
-                setAppliedCount(res.data?.appliedCount!);
                 setOfferCount(res.data?.offerCount!);
                 setRejectedCount(res.data?.rejectedCount!);
                 setStageCount(res.data?.stageCount!);
@@ -37,15 +51,12 @@ export const Dashboard: React.FC = () => {
                     const value: number = location[key];
                     return { value, label: key };
                 });
-                console.log(res.data?.fiveDayAppCount);
                 setLocations(transformedLocations);
                 const tempDateX: Date[] = [];
                 const tempDateY: number[] = [];
                 (res.data?.fiveDayAppCount || []).forEach((obj: { [key: string]: number }) => {
                     const key: string = Object.keys(obj)[0];
                     const date: Date = new Date(key);
-                    // date.setDate(date.getDate() + 1);
-                    console.log(key);
                     const count: number = obj[key];
                     tempDateX.push(date);
                     tempDateY.push(count);

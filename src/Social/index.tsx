@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Layout } from '../components/Layout';
 import "./Social.scss";
 import { PostInterface } from '../interfaces/PostInterface';
@@ -6,6 +6,9 @@ import { GET } from './getPosts';
 import { defaultApplication } from '../UserApplications';
 import { Post } from '../components/Post/Post';
 import { Loader } from '../components/Loader/Loader';
+import { GET_AUTH } from '../utils/checkAuth';
+import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../context/UserContext';
 
 const defaultPost = {
     firstName: "",
@@ -19,18 +22,31 @@ export const Social: React.FC = () => {
     const [page, setPage] = useState<number>(0);
     const [blockFurtherRequests, setBlockFurtherRequests] = useState<boolean>(false);
     const [loading, setLoading] = useState(true);
+    const { user, setUser } = useContext(UserContext);
+    const navigate = useNavigate();
 
     const getPosts = async () => {
         setLoading(true);
         const res = await GET(page);
         console.log(res.posts);
-        if (res.posts.length == 0) {
+        if (res.posts.length === 0) {
             setBlockFurtherRequests(true);
         }
         setPosts([...posts, ...res.posts]);
         setPage(page + 1);
         setLoading(false);
     }
+
+    useEffect(() => {
+        const tryInitialAuth = async () => {
+            const res = await GET_AUTH();
+            if (res.status === 200) {
+                setUser(res.user);
+                navigate("/dashboard")
+            }
+        }
+        !user && tryInitialAuth();
+    }, [navigate, setUser]);
 
     useEffect(() => {
         getPosts();
