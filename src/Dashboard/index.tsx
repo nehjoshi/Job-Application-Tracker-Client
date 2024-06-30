@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import styles from './Dashboard.module.scss';
 import { Layout } from '../components/Layout';
 import { UserContext } from '../context/UserContext';
@@ -7,70 +7,15 @@ import DiamondIcon from '@mui/icons-material/Diamond';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import ForwardIcon from '@mui/icons-material/Forward';
 import { PieChart } from '@mui/x-charts/PieChart';
-import { GET } from './getStats';
 import { LineChart } from '@mui/x-charts';
-import { useNavigate } from 'react-router-dom';
-import { GET_AUTH } from '../utils/checkAuth';
+import { useTryInitialAuth } from '../components/hooks/useTryInitialAuth';
+import { useStatistics } from './useStatistics';
 
 export const Dashboard: React.FC = () => {
 
-    const { user, setUser } = useContext(UserContext);
-    const [totalCount, setTotalCount] = useState(0);
-    const [offerCount, setOfferCount] = useState(0);
-    const [rejectedCount, setRejectedCount] = useState(0);
-    const [stageCount, setStageCount] = useState(0);
-    const [locations, setLocations] = useState<Array<{ value: number, label: string }>>([]);
-    const [dateX, setDateX] = useState<Array<Date>>();
-    const [dateY, setDateY] = useState<Array<number>>();
-    const [loading, setLoading] = useState(true);
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        const tryInitialAuth = async () => {
-            console.log("Trying Initial Auth");
-            const res = await GET_AUTH();
-            if (res.status === 200) {
-                setUser(res.user);
-                navigate("/dashboard")
-            }
-        }
-        !user && tryInitialAuth();
-        document.title = "Job Status Tracker | Dashboard";
-    }, [user, navigate, setUser]);
-
-    useEffect(() => {
-        const fetchStatistics = async () => {
-            const res = await GET();
-            if (res.status === 200) {
-                setTotalCount(res.data?.totalCount!);
-                setOfferCount(res.data?.offerCount!);
-                setRejectedCount(res.data?.rejectedCount!);
-                setStageCount(res.data?.stageCount!);
-                const transformedLocations = (res.data?.topLocations || []).map((location: { [key: string]: number }) => {
-                    const key: string = Object.keys(location)[0];
-                    const value: number = location[key];
-                    return { value, label: key };
-                });
-                setLocations(transformedLocations);
-                const tempDateX: Date[] = [];
-                const tempDateY: number[] = [];
-                (res.data?.fiveDayAppCount || []).forEach((obj: { [key: string]: number }) => {
-                    const key: string = Object.keys(obj)[0];
-                    const date: Date = new Date(key);
-                    const count: number = obj[key];
-                    tempDateX.push(date);
-                    tempDateY.push(count);
-                });
-                setDateX(tempDateX);
-                setDateY(tempDateY);
-                setLoading(false);
-            }
-            else {
-                console.log(res.message);
-            }
-        }
-        fetchStatistics();
-    }, []);
+    const { user } = useContext(UserContext);
+    useTryInitialAuth();
+    const {statistics, loading} = useStatistics();
 
 
     return (
@@ -87,7 +32,7 @@ export const Dashboard: React.FC = () => {
                                 <div className={styles.iconWrapper}>
                                     <WorkIcon className={styles.statIcon} />
                                 </div>
-                                <h1 className={styles.statHeading}>{totalCount}</h1>
+                                <h1 className={styles.statHeading}>{statistics?.totalCount}</h1>
                                 <h3 className={styles.statTitle}>Total Applications</h3>
                                 <p className={styles.statDescription}>Add more applications to increase your chances of success</p>
                             </div>
@@ -95,7 +40,7 @@ export const Dashboard: React.FC = () => {
                                 <div className={styles.iconWrapper}>
                                     <ForwardIcon className={styles.statIcon} />
                                 </div>
-                                <h1 className={styles.statHeading}>{stageCount}</h1>
+                                <h1 className={styles.statHeading}>{statistics?.stageCount}</h1>
                                 <h3 className={styles.statTitle}>Proceeded Applications</h3>
                                 <p className={styles.statDescription}>The number of applications in which you've moved to the next round of the hiring process</p>
                             </div>
@@ -103,15 +48,15 @@ export const Dashboard: React.FC = () => {
                                 <div className={styles.iconWrapper}>
                                     <DiamondIcon className={styles.statIcon} />
                                 </div>
-                                <h1 className={styles.statHeading}>{offerCount}</h1>
+                                <h1 className={styles.statHeading}>{statistics?.offerCount}</h1>
                                 <h3 className={styles.statTitle}>Total Offers</h3>
-                                <p className={styles.statDescription}>{offerCount > 0 ? "Congratulations! You're on the right path!" : "Don't be discouraged! Trust the process, and be consistent"}</p>
+                                <p className={styles.statDescription}>{statistics.offerCount > 0 ? "Congratulations! You're on the right path!" : "Don't be discouraged! Trust the process, and be consistent"}</p>
                             </div>
                             <div className={styles.box}>
                                 <div className={styles.iconWrapper}>
                                     <ThumbDownIcon className={styles.statIcon} />
                                 </div>
-                                <h1 className={styles.statHeading}>{rejectedCount}</h1>
+                                <h1 className={styles.statHeading}>{statistics?.rejectedCount}</h1>
                                 <h3 className={styles.statTitle}>Rejected Applications</h3>
                                 <p className={styles.statDescription}>What doesn't kill you makes you stronger</p>
                             </div>
@@ -121,7 +66,7 @@ export const Dashboard: React.FC = () => {
                                 <h3 className={styles.statTitle}>Top Application Locations</h3>
                                 <div className={styles.pieContainer}>
                                     <PieChart className={styles.pie} series={[{
-                                        data: locations,
+                                        data: statistics?.locations || [],
                                         highlightScope: { faded: 'global', highlighted: 'item' }
                                     }]} />
                                 </div>
@@ -131,14 +76,14 @@ export const Dashboard: React.FC = () => {
                                 <LineChart
                                     xAxis={[
                                         {
-                                            data: dateX,
+                                            data: statistics?.dateX,
                                             scaleType: 'time',
                                             valueFormatter: (date: Date) => date.toLocaleDateString(),
                                         }
                                     ]}
                                     series={[
                                         {
-                                            data: dateY,
+                                            data: statistics?.dateY,
                                             // area: true,
                                             curve: 'linear'
                                         },
