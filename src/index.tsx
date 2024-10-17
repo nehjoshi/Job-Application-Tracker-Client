@@ -32,6 +32,12 @@ const router = createBrowserRouter([
   }
 ])
 
+if (process.env.NODE_ENV === 'production') {
+  // Override console.log to a no-op in production
+  console.log = () => {};
+}
+
+
 const rootElement = document.getElementById('root') as HTMLElement;
 const root = ReactDOM.createRoot(rootElement);
 root.render(

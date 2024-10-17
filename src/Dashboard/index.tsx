@@ -15,7 +15,7 @@ export const Dashboard: React.FC = () => {
 
     const { user } = useContext(UserContext);
     useTryInitialAuth();
-    const {statistics, loading} = useStatistics();
+    const { statistics, loading } = useStatistics();
 
 
     return (

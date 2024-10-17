@@ -40,6 +40,7 @@ export const EditModal: React.FC<Props> = ({ open, handleClose, application, edi
     const [location, setLocation] = useState<string>();
     const [status, setStatus] = useState<string>();
     const [dateApplied, setDateApplied] = useState<string | Date>();
+    const [additionalInfo, setAdditionalInfo] = useState<string>();
 
     console.log(application);
 
@@ -49,7 +50,8 @@ export const EditModal: React.FC<Props> = ({ open, handleClose, application, edi
         setCompensation(application?.compensation!);
         setLocation(application?.location!);
         setStatus(application?.status!);
-        setDateApplied(application?.dateApplied!)
+        setDateApplied(application?.dateApplied!);
+        setAdditionalInfo(application?.additionalInfo!);
     }, [application])
 
     const determineIfDisabled = () => {
@@ -65,7 +67,7 @@ export const EditModal: React.FC<Props> = ({ open, handleClose, application, edi
             location: location || application?.location!,
             status: status || application?.status!,
             dateApplied: dateApplied || application?.dateApplied!,
-            additionalInfo: application?.additionalInfo!,
+            additionalInfo: additionalInfo || application?.additionalInfo!,
             compensation: compensation || application?.compensation!
         }
         editApplication(obj);
@@ -122,6 +124,17 @@ export const EditModal: React.FC<Props> = ({ open, handleClose, application, edi
                             <MenuItem value="ROUND_5">Round 5</MenuItem>
                             <MenuItem value="REJECTED">Rejected</MenuItem>
                         </Select>
+                    </div>
+                    <div className={styles.editModalRow}>
+                        <TextField
+                            className={styles.modalRowItem}
+                            multiline
+                            fullWidth
+                            value={application?.additionalInfo} 
+                            label="Additional Info"
+                            onChange={e => setAdditionalInfo(e.target.value)}
+                            rows={2}
+                            />
                     </div>
                     <Button onClick={() => determineIfDisabled() ? null : sendBackValues()} disabled={determineIfDisabled()} style={{ margin: '10px auto', display: 'block' }} variant='contained' color='success'>Save Changes</Button>
                 </Box>
