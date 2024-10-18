@@ -130,7 +130,7 @@ export const EditModal: React.FC<Props> = ({ open, handleClose, application, edi
                             className={styles.modalRowItem}
                             multiline
                             fullWidth
-                            value={application?.additionalInfo} 
+                            value={additionalInfo} 
                             label="Additional Info"
                             onChange={e => setAdditionalInfo(e.target.value)}
                             rows={2}

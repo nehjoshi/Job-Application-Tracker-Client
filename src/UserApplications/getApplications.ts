@@ -5,10 +5,10 @@ import { getAccessToken } from "../utils/getAccessToken";
 import {ApplicationResponse} from '../interfaces/ApplicationResponse';
 
 
-export const GET = async (pageNumber: number) => {
+export const GET = async (pageNumber: number, pageSize: number) => {
     try {
         console.log(generateHeader());
-        const res: ApplicationResponse = await axios.get(ENDPOINTS["all-applications"] + `/${pageNumber}`, {
+        const res: ApplicationResponse = await axios.get(ENDPOINTS["all-applications"] + `/${pageNumber}?pageSize=${pageSize}`, {
             headers: {
                 'Authorization': 'Bearer ' + getAccessToken()
             }

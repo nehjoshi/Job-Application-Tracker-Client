@@ -16,7 +16,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { useNavigate } from 'react-router-dom';
 import { DeleteModal } from './DeleteModal';
 import { DELETE } from './deleteApplication';
-import { Alert, Snackbar, TextField } from '@mui/material';
+import { Alert, MenuItem, Select, Snackbar, TextField } from '@mui/material';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { EditModal } from './EditModal';
@@ -64,11 +64,12 @@ export const UserApplications: React.FC = () => {
     const [newAppModalOpen, setNewAppModalOpen] = useState(false);
     const [refresh, setRefresh] = useState<boolean>(false);
     const [search, setSearch] = useState<string>("");
+    const [pageSize, setPageSize] = useState<number>(10);
     const navigate = useNavigate();
 
     useEffect(() => {
         fetchApplications();
-    }, [pageNumber, refresh]);
+    }, [pageNumber, refresh, pageSize]);
 
     useEffect(() => {
         fetchSearchApplications();
@@ -78,12 +79,12 @@ export const UserApplications: React.FC = () => {
 
     const fetchApplications = async () => {
         setLoading(true);
-        const res: { applications: Application[], count: number, status: number } = await GET(pageNumber);
+        const res: { applications: Application[], count: number, status: number } = await GET(pageNumber, pageSize);
         if (res.status === 200) {
             setApplications(res.applications);
             console.log(res.applications);
             setAppCount(res.count);
-            setPageCount(Math.ceil(res.count / 10));
+            setPageCount(Math.ceil(res.count / pageSize));
         }
         else navigate('/login');
         setLoading(false);
@@ -206,11 +207,34 @@ export const UserApplications: React.FC = () => {
                                             className={`${styles.paginationIcons} ${pageNumber === 0 && styles.paginationDisabled}`}
                                             onClick={() => setPageNumber(pageNumber => Math.max(0, pageNumber - 1))}
                                         />
-                                        <p>Page {pageNumber + 1} of {pageCount}</p>
+                                        <span style={{display: 'flex', alignItems: 'center'}}>Page &nbsp;
+                                            <TextField
+                                                placeholder={`${pageNumber + 1}`}
+                                                size='small'
+                                                variant='standard'
+                                                onBlur={e => (Number(e.target.value) >= 1 && Number(e.target.value) <= pageCount) && setPageNumber(Number(e.target.value) - 1)}
+                                                sx={{width: "30px"}}
+                                                autoComplete='off'
+                                            >{pageNumber + 1} </TextField>
+                                            &nbsp;of {pageCount}</span>
                                         <ArrowForwardIosIcon
                                             className={`${styles.paginationIcons} ${pageNumber + 1 === pageCount && styles.paginationDisabled}`}
                                             onClick={() => setPageNumber(pageNumber => Math.min(pageCount - 1, pageNumber + 1))}
                                         />
+                                    </div>
+                                }
+                                {!search &&
+                                    <div className={styles.center}>
+                                        <span>
+                                            Results per page: &nbsp;
+                                            <Select color='info' size='small' value={pageSize} onChange={e => setPageSize(Number(e.target.value))}>
+                                                <MenuItem value={10}>10</MenuItem>
+                                                <MenuItem value={20}>20</MenuItem>
+                                                <MenuItem value={30}>30</MenuItem>
+                                                <MenuItem value={40}>40</MenuItem>
+                                                <MenuItem value={50}>50</MenuItem>
+                                            </Select>
+                                        </span>
                                     </div>
                                 }
                             </div>
