@@ -87,7 +87,7 @@ export const EditModal: React.FC<Props> = ({ open, handleClose, application, edi
                     </Typography>
                     <div className={styles.editModalRow}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <DatePicker value={dayjs(dateApplied)} onChange={date => setDateApplied(date?.toISOString())} className={styles.modalRowItem} label="Basic date picker" />
+                            <DatePicker value={dayjs(dateApplied)} onChange={date => setDateApplied(date?.toISOString())} className={styles.modalRowItem} label="Date Applied" />
                         </LocalizationProvider>
                         <TextField className={styles.modalRowItem} onChange={e => setName(e.target.value)} label="Company Name" variant='standard' value={name} />
                         <TextField className={styles.modalRowItem} onChange={e => setTitle(e.target.value)} label="Position Title" variant='standard' value={title} />
